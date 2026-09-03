@@ -39,22 +39,7 @@ export const metadata: Metadata = {
     robots: {
         index: true,
         follow: true,
-    },
-    openGraph: {
-        title: DEFAULT_TITLE,
-        description:
-            "Self-taught full-stack developer building for the full-stack + application security space.",
-        url: SITE_URL,
-        siteName: SITE_NAME,
-        type: "website",
-        locale: "en_IN",
-    },
-    twitter: {
-        card: "summary",
-        title: DEFAULT_TITLE,
-        description:
-            "Self-taught full-stack developer building for the full-stack + application security space.",
-    },
+    }
 };
 
 /**

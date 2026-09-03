@@ -31,9 +31,9 @@ export function StackSection() {
   return (
     <section aria-label="Tech stack" className="mt-16">
       <div className="mb-3 flex items-center gap-3">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+        <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
           Stack
-        </p>
+        </h2>
         <span className="h-px flex-1 bg-border" aria-hidden="true" />
       </div>
       <ul className="flex flex-wrap gap-2">
@@ -45,7 +45,7 @@ export function StackSection() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`https://skillicons.dev/icons?i=${slug}`}
-              alt=""
+              alt={`${name} logo`}
               width={20}
               height={20}
               loading="lazy"

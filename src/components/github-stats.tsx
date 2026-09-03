@@ -29,9 +29,9 @@ export function GithubStatsSection() {
   return (
     <section aria-label="GitHub contribution activity" className="mt-16">
       <div className="mb-3 flex items-center gap-3">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+        <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
           GitHub stats
-        </p>
+        </h2>
         <span className="h-px flex-1 bg-border" aria-hidden="true" />
       </div>
       <div className="rounded-lg border border-border bg-surface p-4">

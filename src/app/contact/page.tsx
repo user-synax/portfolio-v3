@@ -8,6 +8,23 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch with Ayush — open to full-stack roles and freelance work in India / Delhi-NCR.",
+  alternates: {
+    canonical: "https://synax.me/contact",
+  },
+  openGraph: {
+    title: "Contact — Ayush",
+    description:
+      "Get in touch with Ayush — open to full-stack roles and freelance work in India / Delhi-NCR.",
+    url: "https://synax.me/contact",
+    siteName: "synax.me",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact — Ayush",
+    description:
+      "Get in touch with Ayush — open to full-stack roles and freelance work in India / Delhi-NCR.",
+  },
 };
 
 export default function ContactPage() {
@@ -42,9 +59,9 @@ export default function ContactPage() {
       <ContactForm />
 
       <div className="mt-10 flex flex-col gap-3">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+        <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
           Elsewhere
-        </p>
+        </h2>
         <SocialLinks />
       </div>
     </div>

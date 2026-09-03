@@ -34,9 +34,9 @@ export function SpotlightSection() {
   return (
     <section aria-label="Now building" className="mt-16">
       <div className="mb-3 flex items-center gap-3">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+        <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
           Now building
-        </p>
+        </h2>
         <span className="h-px flex-1 bg-border" aria-hidden="true" />
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -77,9 +77,9 @@ function SpotlightCard({ project }: { project: Project }) {
             <span className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-accent">
               {tag ?? project.tags[0]}
             </span>
-            <span className="font-display text-[1.0625rem] font-semibold tracking-tight">
+            <h3 className="font-display text-[1.0625rem] font-semibold tracking-tight">
               {project.name}
-            </span>
+            </h3>
             <span className="text-[0.8125rem] leading-relaxed text-muted-foreground">
               {project.tagline}
             </span>

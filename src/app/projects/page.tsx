@@ -8,7 +8,24 @@ import { projects, type Project } from "@/lib/projects";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Things Ayush builds: CampusZen, Kivo, Mahamaya, CPGRAM Recreate and Blob.io.",
+    "What Ayush is shipping: CampusZen, Kivo, and CPGRAM Recreate — the stack and story behind each one.",
+  alternates: {
+    canonical: "https://synax.me/projects",
+  },
+  openGraph: {
+    title: "Projects — Ayush",
+    description:
+      "What Ayush is shipping: CampusZen, Kivo, and CPGRAM Recreate — the stack and story behind each one.",
+    url: "https://synax.me/projects",
+    siteName: "synax.me",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Projects — Ayush",
+    description:
+      "What Ayush is shipping: CampusZen, Kivo, and CPGRAM Recreate — the stack and story behind each one.",
+  },
 };
 
 function ProjectLinks({ project }: { project: Project }) {

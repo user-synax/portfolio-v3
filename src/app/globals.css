@@ -1,26 +1,214 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces);
+  --font-heading: var(--font-fraunces);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  /* design.md custom tokens */
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-faint: var(--faint);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-hover: var(--accent-hover);
+  --color-status-ok: var(--status-ok);
+  --color-status-idle: var(--status-idle);
+  --color-status-busy: var(--status-busy);
+  --color-status-offline: var(--status-offline);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * Dark theme is the default (see design.md — no theme toggle).
+ * Values live in :root so there is zero flash of light theme, and are
+ * duplicated in .dark so shadcn `dark:` variants keep working.
+ */
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* base (design.md) */
+  --background: #0c0a09; /* stone-950, warm near-black */
+  --foreground: #e7e5e4; /* stone-200 */
+  --surface: #131110;
+  --raised: #1c1917; /* stone-900 */
+  --faint: #78716c; /* stone-500 */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface);
+  --popover-foreground: var(--foreground);
+
+  /* accent (design.md) */
+  --primary: #e8b34b;
+  --primary-foreground: #1c1917;
+  --accent: #e8b34b;
+  --accent-foreground: #1c1917;
+  --accent-hover: #f2c46e;
+  --accent-soft: rgba(232, 179, 75, 0.09);
+  --ring: #e8b34b;
+
+  /* neutrals */
+  --secondary: var(--raised);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--raised);
+  --muted-foreground: #a8a29e; /* stone-400 */
+  --destructive: #f87171;
+  --border: rgba(231, 229, 228, 0.08);
+  --input: rgba(231, 229, 228, 0.12);
+
+  /* status dots (design.md) */
+  --status-ok: #4ade80;
+  --status-idle: #fbbf24;
+  --status-busy: #f87171;
+  --status-offline: #57534e;
+
+  /* charts (unused, kept for shadcn completeness) */
+  --chart-1: #e8b34b;
+  --chart-2: #a8a29e;
+  --chart-3: #78716c;
+  --chart-4: #57534e;
+  --chart-5: #44403c;
+
+  --radius: 0.5rem;
+
+  /* motion tokens — texts-reveal (transitions-dev skill, 18-texts-reveal.md) */
+  --stagger-dur: 500ms;
+  --stagger-distance: 12px;
+  --stagger-stagger: 40ms;
+  --stagger-blur: 3px;
+  --stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--raised);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--primary-foreground);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*
+ * Texts reveal — transitions-dev skill (18-texts-reveal.md), installed
+ * verbatim. Lines start hidden; `.t-stagger.is-shown` plays the staggered
+ * blurred rise. Reveal component toggles the class on mount.
+ */
+.t-stagger-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(var(--stagger-distance));
+  filter: blur(var(--stagger-blur));
+  transition:
+    opacity var(--stagger-dur) var(--stagger-ease),
+    transform var(--stagger-dur) var(--stagger-ease),
+    filter var(--stagger-dur) var(--stagger-ease);
+  will-change: transform, opacity, filter;
+}
+/* Per-line delay helpers (per skill docs: N-1 × --stagger-stagger). */
+.t-stagger-line--1 { transition-delay: calc(var(--stagger-stagger) * 0); }
+.t-stagger-line--2 { transition-delay: calc(var(--stagger-stagger) * 1); }
+.t-stagger-line--3 { transition-delay: calc(var(--stagger-stagger) * 2); }
+.t-stagger-line--4 { transition-delay: calc(var(--stagger-stagger) * 3); }
+.t-stagger-line--5 { transition-delay: calc(var(--stagger-stagger) * 4); }
+.t-stagger-line--6 { transition-delay: calc(var(--stagger-stagger) * 5); }
+
+.t-stagger.is-shown .t-stagger-line {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.t-stagger.is-hiding .t-stagger-line {
+  opacity: 0;
+  transform: translateY(0);
+  filter: blur(0);
+  transition:
+    opacity 200ms ease,
+    transform 0s linear,
+    filter 0s linear;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-stagger-line { transition: none !important; }
+}
+/* Settle guarantee: after the full stagger window (500ms dur + 200ms max
+   delay), force lines to their resting state. Covers environments where
+   transitions never run (background tabs, frozen compositors) so copy can
+   never stay invisible. In browsers the transition has already finished,
+   so this is a visual no-op. */
+.t-stagger-settled .t-stagger-line {
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Slide-in underline for links (design.md motion tokens) */
+.underline-slide {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 200ms ease-out;
+}
+.underline-slide:hover,
+.underline-slide:focus-visible {
+  background-size: 100% 1px;
 }

@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# synax.me — Ayush's portfolio
 
-## Getting Started
+Personal portfolio for Ayush ([@user-synax](https://github.com/user-synax)),
+deployed on [synax.me](https://synax.me).
 
-First, run the development server:
+Stack: **Next.js (App Router) · TypeScript · Tailwind CSS v4 · shadcn/ui ·
+Framer Motion · Bun**.
+
+## Design
+
+All visual decisions — fonts, color tokens, spacing scale, motion timings —
+live in **[design.md](./design.md)**. It is the single source of truth: change
+the design there first, then the code.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+bun run dev       # http://localhost:3000
+bun run build     # production build (typechecks)
+bun run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+See [.env.example](./.env.example):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `NEXT_PUBLIC_DISCORD_ID` — enables the Discord status widget on the home
+  page via the [Lanyard API](https://lanyard.rest). Unset → widget hidden.
+- `RESEND_API_KEY`, `CONTACT_FROM`, `CONTACT_TO` — power the contact form.
+  The form POSTs to [`src/app/api/contact/route.ts`](./src/app/api/contact/route.ts),
+  which validates + sends via [Resend](https://resend.com). Until
+  `RESEND_API_KEY` is set the route answers 503 and the form shows a
+  friendly "not set up yet" note.
 
-## Learn More
+## TODO for Ayush
 
-To learn more about Next.js, take a look at the following resources:
+- [ ] Real repo URLs in [`src/lib/projects.ts`](./src/lib/projects.ts) as repos go public
+- [ ] Add a `RESEND_API_KEY` and verify the sending domain in Resend so the
+      contact form actually delivers (see `.env.example`)
+- [ ] Rate-limit `/api/contact` (Upstash / Vercel KV) once it gets traffic
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/                  # routes: /, /projects, /contact (+ root layout)
+  components/
+    site-header.tsx     # persistent nav (stays mounted across routes)
+    site-footer.tsx     # persistent footer + socials
+    page-transition.tsx # AnimatePresence route transitions (reduced-motion aware)
+    widgets/            # server components: GitHub, weather, Discord (Lanyard)
+    contact-form.tsx    # validated form → POST /api/contact (Resend)
+    github-stats.tsx    # contribution calendar (client-fetched)
+    stack-section.tsx   # skillicons.dev stack chips
+  app/api/contact/      # Resend route handler (validation, honeypot)
+  lib/                  # socials, projects data, time helpers
+```

@@ -1,0 +1,83 @@
+---
+title: "Rate-limiting a contact form without a database"
+description: "A fixed-window limiter for a Next.js route handler — no Redis, no Upstash, just a Map and a prune."
+date: "2026-09-10"
+tags: ["Next.js", "TypeScript", "Security"]
+---
+
+My contact form posts to a route handler that sends email through Resend.
+Anyone who finds the endpoint can fire requests at it until I hit my quota,
+so it needs a limit. The obvious answer is Upstash Ratelimit — but for a
+personal site that felt like standing up infrastructure to stop a problem I
+don't have yet.
+
+Instead: a `Map`, a timestamp, and about thirty lines.
+
+## The idea
+
+A fixed window counts requests per key. If a key is over the maximum, reject
+and say when to come back. When the window expires, start a new one.
+
+```ts
+type Bucket = { count: number; resetAt: number };
+
+const buckets = new Map<string, Bucket>();
+
+export function checkRateLimit(key: string, max = 5, windowMs = 60_000) {
+  const now = Date.now();
+  const bucket = buckets.get(key);
+
+  if (!bucket || bucket.resetAt <= now) {
+    buckets.set(key, { count: 1, resetAt: now + windowMs });
+    return null; // allowed — first request in this window
+  }
+
+  if (bucket.count >= max) {
+    return Math.ceil((bucket.resetAt - now) / 1000); // seconds to wait
+  }
+
+  bucket.count += 1;
+  return null;
+}
+```
+
+Returning `null` for "allowed" and a number for "wait this long" keeps the
+call site in the route handler down to a single `if`.
+
+## Two details that matter
+
+**Check before you parse.** Rate-limit first, then read the body. A flood of
+malformed JSON should still cost the caller a slot — otherwise the expensive
+path is the one thing you aren't protecting.
+
+**Bound the map.** A `Map` that only ever grows is a memory leak with extra
+steps. Sweeping expired buckets on write, but only once the map passes a
+size threshold, keeps the cost negligible for normal traffic:
+
+```ts
+if (buckets.size > 1000) {
+  for (const [k, b] of buckets) {
+    if (b.resetAt <= now) buckets.delete(k);
+  }
+}
+```
+
+Then in the handler, before anything else:
+
+```ts
+const retryAfter = checkRateLimit(clientKey(request));
+if (retryAfter !== null) {
+  return NextResponse.json(
+    { error: "Too many messages — try again shortly." },
+    { status: 429, headers: { "Retry-After": String(retryAfter) } },
+  );
+}
+```
+
+> The honest caveat: state lives in one process. On serverless each cold
+> start resets it and instances don't share counts. It's a speed bump, not a
+> wall — and when the traffic shows up, swapping it for a real store means
+> changing the body of one function.
+
+The honeypot field and Resend's own abuse protection stay as the other
+layers. Three weak layers beat one strong one you forgot to deploy.

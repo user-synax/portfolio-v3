@@ -1,0 +1,34 @@
+---
+title: "Starting a blog"
+description: "Why this site now has a /blogs page, what I plan to write about, and how a post actually gets published."
+date: "2026-09-20"
+tags: ["Meta", "Writing"]
+---
+
+Until now this site has been a portfolio: a hero, three projects, a contact
+form. Static, tidy, and not a place where I could think out loud.
+
+A blog fixes the second part. Most of what I learn doesn't belong in a
+project README — it belongs in a short post that someone else might search
+for at 1am.
+
+## What I'll write about
+
+Roughly three things:
+
+- **Building in public** — decisions from CampusZen and Kivo, including the
+  ones I got wrong.
+- **The self-taught path** — what I'm studying, what I skipped, and what
+  actually stuck.
+- **Application security** — the space I want to work in, written as I learn
+  it rather than after I've mastered it.
+
+## How a post gets published
+
+There's no CMS and no admin panel. A post is a single file dropped into
+`content/blogs/` with a little frontmatter at the top. The filename becomes
+the URL, the frontmatter becomes the title, date and tags, and everything
+below it is just Markdown.
+
+So publishing is: write the file, run the dev server, look at it, commit.
+Nothing in `src/` changes — that's the whole point of setting it up this way.

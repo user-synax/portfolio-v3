@@ -126,9 +126,10 @@ Installed verbatim from the `.agents` transitions-dev skill; markup driven by th
 | `--stagger-blur` | `3px` | entrance blur |
 | `--stagger-ease` | `cubic-bezier(0.22, 1, 0.36, 1)` | same curve as route transitions |
 
-**Usage:** hero (home) and the page-title stacks on /projects and /contact only.
-Lines start hidden (CSS) and reveal after hydration — don't wrap critical
-above-the-fold copy in more than 6 lines.
+**Usage:** hero (home) and the page-title stacks on /projects, /blogs, a blog
+post, and /contact only. Lines start hidden (CSS) and reveal after hydration —
+don't wrap critical above-the-fold copy in more than 6 lines. Post *bodies*
+never get `Reveal`: only the title stack staggers, the article itself paints.
 
 ## Component patterns
 
@@ -158,6 +159,42 @@ above-the-fold copy in more than 6 lines.
   color. Placeholder links render as muted non-links (visually "coming soon").
 - **Project cards:** bordered rows with eyebrow index (`01`…), Fraunces title, tagline,
   description, mono tag row, outbound links. No images — text-only keeps Lighthouse clean.
+- **Blog list (`/blogs`):** same eyebrow → Fraunces title → muted body stack as the
+  other subpages, then bordered `bg-surface` rows. Each row: mono meta line
+  (`01 · 20 Sep 2026 · 4 min read`), Fraunces `1.0625rem` title, meta-sized
+  description, mono tag row. The whole row is the link. Hover matches the card
+  token: -1px lift + accent border, title → accent (150ms).
+- **Blog post (`/blogs/[slug]`):** title stack adds date · reading time in the
+  accent eyebrow and the tag row; below it the article body in `.mdx-prose`
+  (see "Blog post" below). Ends with a hairline rule and an accent "All posts"
+  back-link.
+
+## Blog post (`.mdx-prose`)
+
+Article bodies render from `content/blogs/*.mdx` via `next-mdx-remote`. All
+styling is plain CSS scoped to `.mdx-prose` in `globals.css` — CSS is required
+here because `:not(pre) > code` is the only way to tell inline code from a
+fenced block.
+
+- **Body:** `0.9375rem / 1.7`, muted foreground. `p` gap `1.15em`.
+- **h2:** Fraunces `1.0625rem / 1.3` weight 600, foreground (doubles as the
+  "Section / card title" style), `margin-top 2.25em`.
+- **h3:** Geist Sans `0.9375rem` weight 600, foreground, `1.75em`.
+- **Lists:** disc/decimal, `faint` markers, `1.35em` indent.
+- **Links:** accent + `underline-slide`, hover `--accent-hover`. External links
+  open in a new tab (`src/app/blogs/[slug]/mdx.tsx`); internal ones client-navigate.
+- **Inline code:** `--raised` fill, hairline border, 6px radius, **foreground
+  text** — accent stays reserved (a code-heavy post must not turn amber).
+- **Blockquote:** 2px accent left rule, italic, muted.
+- **Code blocks:** Shiki at build time via `rehype-pretty-code`, theme
+  **`vitesse-dark`**, `keepBackground: false` so the fill comes from our
+  tokens — `--raised` + 1px `--border`, 8px radius, `0.8125rem / 1.65` mono,
+  horizontally scrollable. Highlighted lines: `--accent-soft` fill + 2px accent
+  edge. Optional `title=` fence renders as a mono uppercase `figcaption`
+  sharing the card's top edge.
+  *Theme note:* Shiki only supplies token colours; the amber discipline above
+  still holds. Don't add a light theme — the site is dark-only.
+- **Motion:** none. Prose never animates.
 - **System pages (404 / loading / error):** same eyebrow → Fraunces title → muted
   body stack as the subpage titles, inside the same 640px column, so a failure
   still reads as the site. Primary action uses the accent Button, secondary is an
@@ -176,6 +213,10 @@ above-the-fold copy in more than 6 lines.
   same footprint while loading.
 - Skillicons logos load directly from `skillicons.dev` as plain `<img>` (20px,
   lazy) — no next/image remote config needed.
+- Blog posts are compiled at build time (`generateStaticParams` pre-renders
+  every slug) — Shiki highlighting and MDX compilation cost nothing at request
+  time, and no client JS ships for prose.
+- `/rss.xml` is a `force-static` route handler, built alongside the pages.
 - Client JS is limited to: route transition wrapper, nav active state, Reveal
   (texts-reveal trigger), contact form, hover-card, contribution graph. No state
   library (Zustand skipped — no cross-component client state exists).

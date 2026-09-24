@@ -8,6 +8,7 @@ import { StackSection } from "@/components/stack-section";
 import { DiscordWidget } from "@/components/widgets/discord-widget";
 import { GithubWidget } from "@/components/widgets/github-widget";
 import { WeatherWidget } from "@/components/widgets/weather-widget";
+import { pageAlternates } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: {
@@ -15,9 +16,7 @@ export const metadata: Metadata = {
   },
   description:
     "Self-taught full-stack developer in Delhi building CampusZen and Kivo with Next.js, TypeScript and Tailwind.",
-  alternates: {
-    canonical: "https://synax.me/",
-  },
+  alternates: pageAlternates("https://synax.me/"),
   openGraph: {
     title: "Ayush — Full-stack developer in Delhi",
     description:

@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Reveal, RevealLine } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
+import { pageAlternates } from "@/lib/metadata";
 import { projects, type Project } from "@/lib/projects";
 
 /**
@@ -20,9 +21,7 @@ const DESCRIPTION = `What Ayush is shipping: ${projectList} — the stack and st
 export const metadata: Metadata = {
   title: "Projects",
   description: DESCRIPTION,
-  alternates: {
-    canonical: "https://synax.me/projects",
-  },
+  alternates: pageAlternates("https://synax.me/projects"),
   openGraph: {
     title: "Projects — Ayush",
     description: DESCRIPTION,

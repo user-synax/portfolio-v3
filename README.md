@@ -6,6 +6,9 @@ deployed on [synax.me](https://synax.me).
 Stack: **Next.js (App Router) · TypeScript · Tailwind CSS v4 · shadcn/ui ·
 Framer Motion · Bun**.
 
+Blogging is file-based: see [Writing a blog post](#writing-a-blog-post) —
+no CMS, no code changes per post.
+
 ## Design
 
 All visual decisions — fonts, color tokens, spacing scale, motion timings —
@@ -33,6 +36,37 @@ See [.env.example](./.env.example):
   `RESEND_API_KEY` is set the route answers 503 and the form shows a
   friendly "not set up yet" note.
 
+## Writing a blog post
+
+**You never touch code to publish.** A post is one file — drop it in
+`content/blogs/`, and it appears on `/blogs`, in `/sitemap.xml` and in
+`/rss.xml` automatically.
+
+1. Create `content/blogs/my-post-title.mdx` — the filename becomes the URL
+   (`/blogs/my-post-title`; lowercase, hyphenated, no spaces).
+2. Add frontmatter at the top:
+
+   ```mdx
+   ---
+   title: "My post title"
+   description: "One sentence shown in the list, RSS and search results."
+   date: "2026-09-24"
+   tags: ["Next.js", "TypeScript"]
+   ---
+   ```
+
+3. Write the post below the frontmatter in Markdown (or MDX). Fenced code
+   blocks are syntax-highlighted automatically.
+
+Preview at `http://localhost:3000/blogs/my-post-title`. Commit and deploy —
+that's the whole workflow.
+
+- `draft: true` in the frontmatter keeps a post visible locally but out of
+  production builds and the feed.
+- Post order, reading time and slugs are all derived — nothing to register
+  anywhere. The reader is `src/lib/posts.ts`, the compiler is
+  `src/app/blogs/[slug]/page.tsx`.
+
 ## TODO for Ayush
 
 - [ ] Real repo URLs in [`src/lib/projects.ts`](./src/lib/projects.ts) as repos go public
@@ -45,8 +79,10 @@ See [.env.example](./.env.example):
 ## Structure
 
 ```
+content/blogs/            # ← posts live here. Drop a .mdx file in, done.
 src/
-  app/                  # routes: /, /projects, /contact (+ root layout)
+  app/                  # routes: /, /projects, /blogs, /blogs/[slug], /contact
+    rss.xml/            # RSS 2.0 feed, built from content/blogs
     not-found.tsx       # 404 — caught by the root layout, on-brand
     loading.tsx         # streaming fallback matching the 640px column
     error.tsx           # route error boundary (retry + back home)
@@ -59,5 +95,5 @@ src/
     github-stats.tsx    # contribution calendar (client-fetched)
     stack-section.tsx   # skillicons.dev stack chips
   app/api/contact/      # Resend route handler (validation, honeypot, rate limit)
-  lib/                  # socials, projects data, time helpers, rate limiter
+  lib/                  # socials, projects data, posts reader, time helpers, rate limiter
 ```

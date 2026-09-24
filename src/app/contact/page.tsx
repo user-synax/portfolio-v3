@@ -3,14 +3,13 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
 import { Reveal, RevealLine } from "@/components/reveal";
 import { SocialLinks } from "@/components/social-links";
+import { pageAlternates } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch with Ayush — open to full-stack roles and freelance work in India / Delhi-NCR.",
-  alternates: {
-    canonical: "https://synax.me/contact",
-  },
+  alternates: pageAlternates("https://synax.me/contact"),
   openGraph: {
     title: "Contact — Ayush",
     description:

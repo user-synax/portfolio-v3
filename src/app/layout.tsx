@@ -7,6 +7,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PageTransition } from "@/components/page-transition";
+import { pageAlternates } from "@/lib/metadata";
 
 const fraunces = Fraunces({
     subsets: ["latin"],
@@ -32,9 +33,7 @@ export const metadata: Metadata = {
     },
     description: DEFAULT_DESCRIPTION,
     metadataBase: new URL(SITE_URL),
-    alternates: {
-        canonical: "/",
-    },
+    alternates: pageAlternates("/"),
     robots: {
         index: true,
         follow: true,

@@ -212,3 +212,193 @@
 .underline-slide:focus-visible {
   background-size: 100% 1px;
 }
+
+/*
+ * Blog post prose (design.md → "Blog post" section).
+ *
+ * Scoped to `.mdx-prose` so the rest of the site is untouched. Every size
+ * below is already on the design.md type scale — no new tokens are
+ * introduced. Written as plain CSS rather than utility classes because we
+ * need `:not(pre) > code` to tell inline code from a fenced block, which a
+ * component override can't express.
+ */
+.mdx-prose {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+.mdx-prose > *:first-child {
+  margin-top: 0;
+}
+
+.mdx-prose p {
+  margin-top: 1.15em;
+}
+
+.mdx-prose h2 {
+  margin-top: 2.25em;
+  font-family: var(--font-fraunces);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+.mdx-prose h3 {
+  margin-top: 1.75em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+
+.mdx-prose ul,
+.mdx-prose ol {
+  margin-top: 1.15em;
+  padding-left: 1.35em;
+}
+.mdx-prose ul {
+  list-style: disc;
+}
+.mdx-prose ol {
+  list-style: decimal;
+}
+.mdx-prose li {
+  margin-top: 0.45em;
+}
+.mdx-prose li::marker {
+  color: var(--faint);
+}
+/* Tighten list nesting so bullets don't drift off the 640px column. */
+.mdx-prose li > ul,
+.mdx-prose li > ol {
+  margin-top: 0.45em;
+}
+
+.mdx-prose strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+.mdx-prose em {
+  font-style: italic;
+}
+
+.mdx-prose blockquote {
+  margin-top: 1.5em;
+  padding-left: 1em;
+  border-left: 2px solid var(--accent);
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+.mdx-prose blockquote > *:first-child {
+  margin-top: 0;
+}
+
+.mdx-prose hr {
+  margin-top: 2.25em;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Prose links get the accent + slide-in underline like every other link. */
+.mdx-prose a {
+  color: var(--accent);
+}
+.mdx-prose a:hover {
+  color: var(--accent-hover);
+}
+
+/* Long URLs shouldn't blow out the column. */
+.mdx-prose :where(p, li, blockquote) {
+  overflow-wrap: break-word;
+}
+
+/* Inline code — deliberately NOT amber (accent is a seasoning). */
+.mdx-prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.8125em;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.1em 0.4em;
+  color: var(--foreground);
+}
+
+/*
+ * Fenced code blocks — rehype-pretty-code emits
+ * figure > pre > code > span[data-line]. Background comes from our own
+ * tokens (keepBackground: false), so the card border/bg language of the
+ * site survives; Shiki supplies token colours only.
+ */
+.mdx-prose figure[data-rehype-pretty-code-figure] {
+  margin-top: 1.5em;
+}
+.mdx-prose figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--faint);
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  padding: 0.5rem 1rem;
+}
+.mdx-prose pre {
+  overflow-x: auto;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  tab-size: 2;
+}
+/* A figcaption sits directly above the block, so they share one edge. */
+.mdx-prose figure[data-rehype-pretty-code-figure] > pre {
+  border-radius: 0 0 8px 8px;
+}
+.mdx-prose figure[data-rehype-pretty-code-figure]:not(:has(figcaption)) > pre {
+  border-radius: 8px;
+}
+.mdx-prose pre,
+.mdx-prose pre > code {
+  display: block;
+  min-width: max-content;
+}
+.mdx-prose pre > code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.mdx-prose [data-line] {
+  display: block;
+  padding: 0 0.25rem;
+  border-radius: 3px;
+}
+.mdx-prose [data-line]:first-child {
+  margin-top: -0.2em; /* optically align the first baseline with the padding */
+}
+.mdx-prose [data-highlighted-line] {
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+.mdx-prose [data-highlighted-chars] {
+  background: var(--accent-soft);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.mdx-prose pre::-webkit-scrollbar {
+  height: 8px;
+}
+.mdx-prose pre::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
+/* No motion in prose — reduced-motion users get identical reading. */

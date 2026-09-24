@@ -23,8 +23,8 @@ const STACK = [
   { name: "GitHub", slug: "github" },
   { name: "Vercel", slug: "vercel" },
   { name: "PostgreSQL", slug: "postgresql" },
-  { name: "PostgreSQL", slug: "postgresql" },
   { name: "Go", slug: "go" },
+  { name: "Linux", slug: "linux" },
 ] as const;
 
 export function StackSection() {

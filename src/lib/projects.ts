@@ -38,12 +38,12 @@ export const projects: Project[] = [
     repo: "https://github.com/user-synax/Kivo",
   },
   {
-    name: "CPGRAM Recreate",
-    tagline: "Hackathon redesign of India's CPGRAMS grievance portal.",
-    description:
-      "A from-scratch reimagining of the government grievance redressal portal, built for a hackathon with a cleaner, more usable flow.",
-    tags: ["Next.js", "TypeScript", "Hackathon", "Govtech"],
-    site: "https://cpgram.usersynax.dev",
-    repo: "https://github.com/user-synax/cpgram-recreate",
-  }
+    name: "Codingo",
+    tagline: "A free, Duolingo-style web app for learning programming",
+    description: `A free, Duolingo-style web app for learning programming.
+Bite-sized lessons. Real code in your browser. Gamified. Fun. For everyone.`,
+    tags: ["Next.js", "TypeScript", "MongoDB", "Bun"],
+    site: "https://coding.synax.me",
+    repo: "https://github.com/user-synax/codingo",
+  },
 ];

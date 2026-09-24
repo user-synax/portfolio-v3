@@ -41,10 +41,10 @@ export function HeroContent() {
         <span className="text-foreground">CampusZen</span> — a verified
         student social network — and{" "}
         <span className="text-foreground">Kivo</span>, a realtime chat
-        platform. Side projects include{" "}
-        <span className="text-foreground">Community</span> and a browser game,{" "}
-        <span className="text-foreground">Blob.io</span>. All while studying
-        (NIOS 12th, planning IGNOU BCA from 2027) and building in public.
+        platform, and{" "}
+        <span className="text-foreground">Codingo</span>, a free Duolingo-style
+        app for learning programming. All while studying (NIOS 12th, planning
+        IGNOU BCA from 2027) and building in public.
       </RevealLine>
       <RevealLine index={5}>
         <SocialLinks />

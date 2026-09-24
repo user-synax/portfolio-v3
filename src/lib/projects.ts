@@ -7,16 +7,12 @@ export type Project = {
   site?: string;
   /** Public repo link, if any. */
   repo?: string;
-  /** True when the repo exists but isn't public yet — renders a muted placeholder. */
-  repoPlaceholder?: boolean;
 };
 
 /**
  * Project list for /projects.
  *
  * TODO(ayush): drop in the remaining repo/site URLs as they go public.
- * Entries with `repoPlaceholder: true` render as muted "coming soon" text
- * on purpose.
  */
 export const projects: Project[] = [
   {

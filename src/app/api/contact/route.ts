@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+import { checkRateLimit, clientKey } from "@/lib/rate-limit";
+
 export const runtime = "nodejs";
 
 /**
@@ -13,14 +15,17 @@ export const runtime = "nodejs";
  *   CONTACT_TO      — delivery inbox; defaults to user-synax@proton.me
  *
  * Hardening notes: payloads are validated + length-capped here (client
- * checks are convenience only), and a hidden "company" honeypot field
- * absorbs naive bots with a silent success. If the form ever gets real
- * traffic, add rate limiting per IP before this route (e.g. Upstash
- * Ratelimit / Vercel KV) and keep an eye on Resend abuse protection.
+ * checks are convenience only), a hidden "company" honeypot field absorbs
+ * naive bots with a silent success, and each client IP is rate limited to
+ * RATE_MAX sends per RATE_WINDOW_MS (see src/lib/rate-limit.ts —
+ * in-process, so swap for Upstash Ratelimit if the form ever gets real
+ * traffic).
  */
 
 const MAX_NAME = 80;
 const MAX_MESSAGE = 5000;
+const RATE_MAX = 5;
+const RATE_WINDOW_MS = 60_000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_TO = "user-synax@proton.me";
 
@@ -141,6 +146,23 @@ function renderHtmlEmail({ name, email, message }: ContactPayload): string {
 }
 
 export async function POST(request: Request) {
+  // Rate limit before parsing so even malformed floods cost the caller a
+  // slot. Counted per IP; the honeypot below still absorbs the bots that
+  // get through.
+  const retryAfter = checkRateLimit(clientKey(request), {
+    max: RATE_MAX,
+    windowMs: RATE_WINDOW_MS,
+  });
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      {
+        error:
+          "Too many messages in a short time — please wait a moment and try again.",
+      },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = (await request.json()) as Record<string, unknown>;

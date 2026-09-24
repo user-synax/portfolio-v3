@@ -15,7 +15,6 @@ const fraunces = Fraunces({
 });
 
 const SITE_URL = "https://synax.me";
-const SITE_NAME = "synax.me";
 const DEFAULT_TITLE = "Ayush — Full-stack developer in Delhi";
 const DEFAULT_DESCRIPTION =
     "Self-taught full-stack developer based in Delhi, India. Building for the full-stack + application security space — CampusZen, Kivo";

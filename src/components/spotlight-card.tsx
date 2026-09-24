@@ -14,7 +14,7 @@ import { projects, type Project } from "@/lib/projects";
  * Ayush's r-hover-card: hovering (or focusing) a tile opens a floating
  * image preview panel with the project description and links.
  *
- * Covers live under /public/projects/*.svg — branded placeholders, swap
+ * Covers live under /public/projects/*.png — branded placeholders, swap
  * for real screenshots when you have them (update `covers` below).
  */
 
@@ -67,6 +67,15 @@ function SpotlightCard({ project }: { project: Project }) {
         >
           {cover && (
             <span className="relative block overflow-hidden border-b border-border">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={cover}
+                alt={`${project.name} preview`}
+                width={800}
+                height={450}
+                loading="lazy"
+                className="aspect-[16/9] w-full object-cover transition-transform duration-150 group-hover:scale-[1.03]"
+              />
               <span className="absolute top-2 right-2 flex size-6 items-center justify-center rounded-md border border-border bg-background/70 text-muted-foreground backdrop-blur-sm transition-colors duration-150 group-hover:text-accent">
                 <ArrowUpRight className="size-3.5" />
                 <span className="sr-only">Open</span>

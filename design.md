@@ -158,6 +158,12 @@ above-the-fold copy in more than 6 lines.
   color. Placeholder links render as muted non-links (visually "coming soon").
 - **Project cards:** bordered rows with eyebrow index (`01`…), Fraunces title, tagline,
   description, mono tag row, outbound links. No images — text-only keeps Lighthouse clean.
+- **System pages (404 / loading / error):** same eyebrow → Fraunces title → muted
+  body stack as the subpage titles, inside the same 640px column, so a failure
+  still reads as the site. Primary action uses the accent Button, secondary is an
+  outline Button. These deliberately skip `Reveal` — an error or 404 should paint
+  immediately, not stagger in. The loading skeleton is `bg-raised` blocks with the
+  standard `animate-pulse`, sized to the column so content doesn't reflow on swap.
 
 ## Performance rules
 

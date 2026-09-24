@@ -5,17 +5,27 @@ import { Reveal, RevealLine } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
 import { projects, type Project } from "@/lib/projects";
 
+/**
+ * Description built from the data itself so the copy can never drift out of
+ * sync with src/lib/projects.ts again (it previously advertised a project
+ * that isn't on the page).
+ */
+const projectNames = projects.map((p) => p.name);
+const projectList =
+  projectNames.length > 1
+    ? `${projectNames.slice(0, -1).join(", ")}, and ${projectNames[projectNames.length - 1]}`
+    : projectNames.join("");
+const DESCRIPTION = `What Ayush is shipping: ${projectList} — the stack and story behind each one.`;
+
 export const metadata: Metadata = {
   title: "Projects",
-  description:
-    "What Ayush is shipping: CampusZen, Kivo, and CPGRAM Recreate — the stack and story behind each one.",
+  description: DESCRIPTION,
   alternates: {
     canonical: "https://synax.me/projects",
   },
   openGraph: {
     title: "Projects — Ayush",
-    description:
-      "What Ayush is shipping: CampusZen, Kivo, and CPGRAM Recreate — the stack and story behind each one.",
+    description: DESCRIPTION,
     url: "https://synax.me/projects",
     siteName: "synax.me",
     type: "website",
@@ -23,12 +33,19 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Projects — Ayush",
-    description:
-      "What Ayush is shipping: CampusZen, Kivo, and CPGRAM Recreate — the stack and story behind each one.",
+    description: DESCRIPTION,
   },
 };
 
 function ProjectLinks({ project }: { project: Project }) {
+  if (!project.site && !project.repo) {
+    return (
+      <p className="mt-1 text-[0.8125rem] text-faint">
+        Repo private — coming soon
+      </p>
+    );
+  }
+
   return (
     <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
       {project.site && (
@@ -52,11 +69,6 @@ function ProjectLinks({ project }: { project: Project }) {
           GitHub
           <ArrowUpRight className="size-3.5" />
         </a>
-      )}
-      {project.repoPlaceholder && !project.repo && (
-        <span className="text-[0.8125rem] text-faint">
-          Repo private — coming soon
-        </span>
       )}
     </div>
   );

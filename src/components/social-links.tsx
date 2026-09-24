@@ -6,6 +6,8 @@ export function SocialLinks({ className = "" }: { className?: string }) {
     <ul className={`flex items-center gap-2 ${className}`}>
       {socials.map((social) => {
         const Icon = social.icon;
+        // mailto: links shouldn't spawn a new tab (and ignore target anyway).
+        const external = /^https?:\/\//.test(social.href);
         if (social.placeholder) {
           return (
             <li key={social.label}>
@@ -24,8 +26,8 @@ export function SocialLinks({ className = "" }: { className?: string }) {
           <li key={social.label}>
             <a
               href={social.href}
-              target="_blank"
-              rel="noreferrer"
+              target={external ? "_blank" : undefined}
+              rel={external ? "noreferrer" : undefined}
               title={social.label}
               className="flex size-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors duration-150 hover:border-accent/50 hover:text-accent"
             >

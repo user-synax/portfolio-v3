@@ -62,6 +62,8 @@ export function ContactForm() {
           setSendError("Sending isn't set up yet — email me directly in the meantime.");
         } else if (response.status === 400) {
           setSendError("One of the fields didn't pass the server check — please review and resend.");
+        } else if (response.status === 429) {
+          setSendError("You've sent a few messages in a row — give it a minute and try again.");
         } else {
           setSendError("Something went wrong sending your message. Please try again.");
         }

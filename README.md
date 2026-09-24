@@ -38,13 +38,18 @@ See [.env.example](./.env.example):
 - [ ] Real repo URLs in [`src/lib/projects.ts`](./src/lib/projects.ts) as repos go public
 - [ ] Add a `RESEND_API_KEY` and verify the sending domain in Resend so the
       contact form actually delivers (see `.env.example`)
-- [ ] Rate-limit `/api/contact` (Upstash / Vercel KV) once it gets traffic
+- [ ] Swap `/api/contact`'s in-process rate limiter for Upstash Ratelimit /
+      Vercel KV once it gets traffic (see [`src/lib/rate-limit.ts`](./src/lib/rate-limit.ts)
+      — in-process state resets on every cold start)
 
 ## Structure
 
 ```
 src/
   app/                  # routes: /, /projects, /contact (+ root layout)
+    not-found.tsx       # 404 — caught by the root layout, on-brand
+    loading.tsx         # streaming fallback matching the 640px column
+    error.tsx           # route error boundary (retry + back home)
   components/
     site-header.tsx     # persistent nav (stays mounted across routes)
     site-footer.tsx     # persistent footer + socials
@@ -53,6 +58,6 @@ src/
     contact-form.tsx    # validated form → POST /api/contact (Resend)
     github-stats.tsx    # contribution calendar (client-fetched)
     stack-section.tsx   # skillicons.dev stack chips
-  app/api/contact/      # Resend route handler (validation, honeypot)
-  lib/                  # socials, projects data, time helpers
+  app/api/contact/      # Resend route handler (validation, honeypot, rate limit)
+  lib/                  # socials, projects data, time helpers, rate limiter
 ```

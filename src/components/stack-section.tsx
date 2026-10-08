@@ -3,7 +3,7 @@
  * bio ("I build with Next.js, TypeScript and Tailwind day to day"), shown
  * as small bordered chips with logos from skillicons.dev.
  *
- * Grouped into Frontend / Backend / Infra. Icons render at full color —
+ * Grouped into Frontend / Backend / Infra / Tools. Icons render at full color —
  * no dimming — with a 150ms hover lift (per design.md's restrained-accent
  * discipline).
  */
@@ -16,6 +16,7 @@ const STACK_GROUPS = [
       { name: "React", slug: "react" },
       { name: "TypeScript", slug: "typescript" },
       { name: "Tailwind", slug: "tailwind" },
+      { name: "Figma", slug: "figma" },
     ],
   },
   {
@@ -23,6 +24,8 @@ const STACK_GROUPS = [
     items: [
       { name: "Node.js", slug: "nodejs" },
       { name: "Express", slug: "express" },
+      { name: "Bun", slug: "bun" },
+      { name: "Go", slug: "go" },
       { name: "MongoDB", slug: "mongodb" },
       { name: "PostgreSQL", slug: "postgresql" },
     ],
@@ -32,6 +35,15 @@ const STACK_GROUPS = [
     items: [
       { name: "Docker", slug: "docker" },
       { name: "Vercel", slug: "vercel" },
+      { name: "Azure", slug: "azure" },
+    ],
+  },
+  {
+    label: "Tools",
+    items: [
+      { name: "Git", slug: "git" },
+      { name: "GitHub", slug: "github" },
+      { name: "Linux", slug: "linux" },
     ],
   },
 ] as const;

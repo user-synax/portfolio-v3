@@ -58,11 +58,20 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.date,
       tags: post.tags,
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "Ayush — Full-stack developer building and securing web apps",
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: `${post.title} — Ayush`,
       description: post.description,
+      images: ["/og-image.png"],
     },
   };
 }

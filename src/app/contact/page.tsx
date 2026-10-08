@@ -17,12 +17,21 @@ export const metadata: Metadata = {
     url: "https://synax.me/contact",
     siteName: "synax.me",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Ayush — Full-stack developer building and securing web apps",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Contact — Ayush",
     description:
       "Get in touch with Ayush — open to full-stack roles and freelance work in India / Delhi-NCR.",
+    images: ["/og-image.png"],
   },
 };
 

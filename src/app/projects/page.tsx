@@ -28,11 +28,20 @@ export const metadata: Metadata = {
     url: "https://synax.me/projects",
     siteName: "synax.me",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Ayush — Full-stack developer building and securing web apps",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Projects — Ayush",
     description: DESCRIPTION,
+    images: ["/og-image.png"],
   },
 };
 

@@ -3,28 +3,37 @@
  * bio ("I build with Next.js, TypeScript and Tailwind day to day"), shown
  * as small bordered chips with logos from skillicons.dev.
  *
- * Icons are rendered desaturated; they colorize on hover (per design.md's
- * restrained-accent discipline and 150ms hover micro-transitions).
+ * Grouped into Frontend / Backend / Infra. Icons render at full color —
+ * no dimming — with a 150ms hover lift (per design.md's restrained-accent
+ * discipline).
  */
 
-const STACK = [
-  { name: "Next.js", slug: "nextjs" },
-  { name: "React", slug: "react" },
-  { name: "TypeScript", slug: "typescript" },
-  { name: "Tailwind", slug: "tailwind" },
-  { name: "MongoDB", slug: "mongodb" },
-  { name: "Node.js", slug: "nodejs" },
-  { name: "Bun", slug: "bun" },
-  { name: "Express", slug: "express" },
-  { name: "Azure", slug: "azure" },
-  { name: "Docker", slug: "docker" },
-  { name: "Figma", slug: "figma" },
-  { name: "Git", slug: "git" },
-  { name: "GitHub", slug: "github" },
-  { name: "Vercel", slug: "vercel" },
-  { name: "PostgreSQL", slug: "postgresql" },
-  { name: "Go", slug: "go" },
-  { name: "Linux", slug: "linux" },
+const STACK_GROUPS = [
+  {
+    label: "Frontend",
+    items: [
+      { name: "Next.js", slug: "nextjs" },
+      { name: "React", slug: "react" },
+      { name: "TypeScript", slug: "typescript" },
+      { name: "Tailwind", slug: "tailwind" },
+    ],
+  },
+  {
+    label: "Backend",
+    items: [
+      { name: "Node.js", slug: "nodejs" },
+      { name: "Express", slug: "express" },
+      { name: "MongoDB", slug: "mongodb" },
+      { name: "PostgreSQL", slug: "postgresql" },
+    ],
+  },
+  {
+    label: "Infra",
+    items: [
+      { name: "Docker", slug: "docker" },
+      { name: "Vercel", slug: "vercel" },
+    ],
+  },
 ] as const;
 
 export function StackSection() {
@@ -36,27 +45,36 @@ export function StackSection() {
         </h2>
         <span className="h-px flex-1 bg-border" aria-hidden="true" />
       </div>
-      <ul className="flex flex-wrap gap-2">
-        {STACK.map(({ name, slug }) => (
-          <li
-            key={slug}
-            className="group inline-flex items-center gap-2 rounded-md border border-border bg-surface py-1.5 pr-3 pl-2 transition-all duration-150 hover:-translate-y-px hover:border-accent/35"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`https://skillicons.dev/icons?i=${slug}`}
-              alt={`${name} logo`}
-              width={20}
-              height={20}
-              loading="lazy"
-              className="size-5 opacity-80 grayscale transition-all duration-150 group-hover:opacity-100 group-hover:grayscale-0"
-            />
-            <span className="font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase transition-colors duration-150 group-hover:text-foreground">
-              {name}
-            </span>
-          </li>
+      <div className="flex flex-col gap-4">
+        {STACK_GROUPS.map((group) => (
+          <div key={group.label}>
+            <p className="mb-2 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+              {group.label}
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {group.items.map(({ name, slug }) => (
+                <li
+                  key={slug}
+                  className="group inline-flex items-center gap-2 rounded-md border border-border bg-surface py-1.5 pr-3 pl-2 transition-all duration-150 hover:-translate-y-px hover:border-accent/35"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`https://skillicons.dev/icons?i=${slug}`}
+                    alt={`${name} logo`}
+                    width={20}
+                    height={20}
+                    loading="lazy"
+                    className="size-5"
+                  />
+                  <span className="font-mono text-[0.75rem] tracking-[0.14em] text-zinc-300 uppercase transition-colors duration-150 group-hover:text-foreground">
+                    {name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

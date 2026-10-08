@@ -22,9 +22,19 @@ const DEFAULT_DESCRIPTION =
 
 export const metadata: Metadata = {
     openGraph: {
-        images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+        type: "website",
+        siteName: "synax.me",
+        images: [
+            {
+                url: "/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "Ayush — Full-stack developer building and securing web apps",
+            },
+        ],
     },
     twitter: {
+        card: "summary_large_image",
         images: ["/og-image.png"],
     },
     title: {
@@ -67,7 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     return (
         <html
             lang="en"
-            className={`dark ${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable} h-full antialiased`}
+            className={`dark ${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable} h-full scroll-smooth antialiased`}
         >
             <body className="flex min-h-dvh flex-col">
                 <script

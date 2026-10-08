@@ -24,12 +24,21 @@ export const metadata: Metadata = {
     url: "https://synax.me/",
     siteName: "synax.me",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Ayush — Full-stack developer building and securing web apps",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Ayush — Full-stack developer in Delhi",
     description:
       "Self-taught full-stack developer in Delhi building CampusZen and Kivo with Next.js, TypeScript and Tailwind.",
+    images: ["/og-image.png"],
   },
 };
 

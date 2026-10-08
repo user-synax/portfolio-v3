@@ -32,7 +32,11 @@ const featured = projects.filter((p) => p.name === "CampusZen" || p.name === "Ki
 
 export function SpotlightSection() {
   return (
-    <section aria-label="Now building" className="mt-16">
+    <section
+      id="projects"
+      aria-label="Now building"
+      className="mt-16 scroll-mt-24"
+    >
       <div className="mb-3 flex items-center gap-3">
         <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
           Now building

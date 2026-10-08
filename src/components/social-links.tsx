@@ -29,7 +29,8 @@ export function SocialLinks({ className = "" }: { className?: string }) {
               target={external ? "_blank" : undefined}
               rel={external ? "noreferrer" : undefined}
               title={social.label}
-              className="flex size-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors duration-150 hover:border-accent/50 hover:text-accent"
+              aria-label={social.label}
+              className="flex size-8 items-center justify-center rounded-md border border-border text-zinc-300 transition-colors duration-150 hover:border-accent/50 hover:text-accent"
             >
               <Icon className="size-4" />
               <span className="sr-only">{social.label}</span>

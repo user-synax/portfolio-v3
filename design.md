@@ -168,6 +168,11 @@ never get `Reveal`: only the title stack staggers, the article itself paints.
   (see `LEVEL_REVEAL_*` in the component) — all disabled under reduced motion.
 - **Buttons:** one primary (accent fill, `--accent-ink` text, 8px radius); everything
   else is a ghost/outline link-button.
+- **Footer wordmark:** the ParticleText canvas (`src/components/ParticleText.jsx`)
+  draws "Ayush Developer" in Fraunces 500 at the top of the footer column, in a
+  180px-tall box. Particles use the current text color with `#e8b34b` highlights
+  (the canvas can't resolve CSS vars); the text is also present as screen-reader
+  only content. Socials and copyright stay below it.
 - **Socials row:** icon-only 32px square buttons, border, hover: accent border + icon
   color. Placeholder links render as muted non-links (visually "coming soon").
 - **Project cards:** bordered rows with eyebrow index (`01`…), Fraunces title, tagline,

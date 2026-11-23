@@ -91,7 +91,8 @@ Base unit **4px**. No custom spacing values outside this scale.
 
 ## Radius, borders, elevation
 
-- Radius: 8px cards/buttons, 6px inputs — nothing rounder
+- Radius: 8px cards/buttons, 6px inputs — nothing rounder (the profile avatar
+  circle is the one exception)
 - Elevation: flat. 1px borders (`--border`). No drop shadows.
 - Card hover: border → `rgba(232 179 75 / 0.35)`, translateY(-1px), 150ms
 - Focus visible: 2px accent ring, offset 2px
@@ -135,6 +136,17 @@ never get `Reveal`: only the title stack staggers, the article itself paints.
 
 - **Nav (persistent):** top bar inside the 640px column. Wordmark left (Fraunces "Ayush"),
   links right. Active link: accent text. Inactive: muted → foreground on hover.
+- **Profile header (home):** replaces the old text-only hero. Banner is a
+  column-width tile (`h-32` mobile / `h-40` desktop), 8px radius, hairline
+  border, image `object-cover`. Avatar is a 96px/112px circle overlapping the
+  banner's bottom-left by 40px/48px, with a 4px `--background` ring and a
+  hairline border to separate it. The name keeps the Hero name scale with the
+  `@user-synax` handle in mono/faint beside it; bio, buttons and socials stack
+  below as before. The name itself is drawn by the TechText
+  canvas wordmark (`src/components/TechText.jsx`) in Fraunces at weight 500,
+  fitted to a 48px/56px box, with the accent only on its hover outline. URLs live in `src/lib/profile.ts` and load via
+  plain `<img>` (no next/image remote config needed); empty values fall back to
+  a token-only gradient banner and an "A" initial avatar.
 - **Eyebrow labels:** mono uppercase — every widget card and section starts with one.
 - **Widget cards (home):** eyebrow label, one-line value, caption below; `min-h` to avoid
   layout shift; fixed width for status dots.

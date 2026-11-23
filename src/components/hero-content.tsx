@@ -71,11 +71,27 @@ export function HeroContent() {
       </div>
 
       <Reveal className="mt-2 flex flex-col gap-4">
-        <RevealLine as="div" index={3} className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <h1 className="font-display h-12 w-30 font-medium sm:h-14 sm:w-48">
-            <TechText text="Ayush" fontWeight={500} accentColor="var(--accent)" style={undefined} />
+        <RevealLine
+          as="div"
+          index={3}
+          className="flex flex-wrap items-center gap-x-3 gap-y-1"
+        >
+          <h1 className="font-display h-20 w-40 font-medium sm:h-28 sm:w-56">
+            {/* align-left + -5% cancels TechText's built-in 5% inset so the
+                word lines up with the bio below on every screen size. */}
+            <TechText
+              text="Ayush"
+              align="center"
+              accentColor="#ff5a36"
+              fontWeight={500}
+              intro="assemble"
+              style={{ marginLeft: "-5%" }}
+              sweep={true}
+            />
           </h1>
-          <span className="font-mono text-[0.8125rem] text-faint">@user-synax</span>
+          <span className="font-mono text-[0.8125rem] text-faint">
+            @user-synax
+          </span>
         </RevealLine>
         <RevealLine
           as="p"
@@ -99,7 +115,9 @@ export function HeroContent() {
               <a
                 href="#projects"
                 aria-label="View projects — scroll to projects section"
-                className={cn(buttonVariants({ variant: "default", size: "lg" }))}
+                className={cn(
+                  buttonVariants({ variant: "default", size: "lg" }),
+                )}
               >
                 View projects
               </a>
@@ -108,7 +126,9 @@ export function HeroContent() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Open resume PDF in a new tab"
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                )}
               >
                 Resume
               </a>

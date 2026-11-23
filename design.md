@@ -144,7 +144,8 @@ never get `Reveal`: only the title stack staggers, the article itself paints.
   `@user-synax` handle in mono/faint beside it; bio, buttons and socials stack
   below as before. The name itself is drawn by the TechText
   canvas wordmark (`src/components/TechText.jsx`) in Fraunces at weight 500,
-  fitted to a 48px/56px box, with the accent only on its hover outline. URLs live in `src/lib/profile.ts` and load via
+  fitted to an 80px/112px box and left-aligned to the column edge, with the
+  accent only on its hover outline. URLs live in `src/lib/profile.ts` and load via
   plain `<img>` (no next/image remote config needed); empty values fall back to
   a token-only gradient banner and an "A" initial avatar.
 - **Eyebrow labels:** mono uppercase — every widget card and section starts with one.

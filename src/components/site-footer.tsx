@@ -12,6 +12,9 @@ export function SiteFooter() {
             fontWeight={500}
             highlightColor="#e8b34b"
             style={{ minHeight: 180 }}
+            intro="rain"
+            shape="circle"
+            glow={true}
           />
         </div>
         <SocialLinks />

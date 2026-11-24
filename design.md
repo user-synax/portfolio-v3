@@ -157,9 +157,15 @@ never get `Reveal`: only the title stack staggers, the article itself paints.
   scales 1.03 (150ms). The tile is the trigger for Ayush's `r-hover-card` — hover
   or keyboard-focus opens a floating image-preview panel with description + links.
 - **Stack chips (home, under the hero):** small bordered chips (`rounded-md`,
-  `gap-2` row) with a skillicons.dev logo + mono uppercase label. Logos render
-  grayscale/80% and colorize on chip hover (150ms) — the only "brand color"
-  allowed on the page.
+  `gap-2` row, `h-8`) with a 16px skillicons.dev logo + mono uppercase label,
+  rendered from one typed config array (`STACK_GROUPS` in
+  `src/components/stack-section.tsx`) grouped Frontend / Backend / Database /
+  Infra / Tools. Primary tools (Next.js, TypeScript, Tailwind, Node.js,
+  PostgreSQL) get a slightly brighter neutral border + foreground text — no
+  loud color. Every chip gets the standard 150ms hover/focus lift (−1px,
+  accent border) plus a CSS-only `role="tooltip"` note from the config on
+  hover/focus; both are disabled under reduced motion. Logos render in full
+  color — the only "brand color" allowed on the page.
 - **GitHub stats card (home, under "Now building"):** contribution calendar from
   Ayush's `contribution-graph.tsx`, inside a bordered `bg-surface` card.
   GitHub-green level ramp (level 0 = muted raised tone), month labels, rolling
